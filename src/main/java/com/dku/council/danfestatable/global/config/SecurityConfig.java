@@ -26,7 +26,7 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     private static final String[] PUBLIC_URI = {
-            "/swagger-ui/**", "/api-docs/**", "/test/**"
+            "/swagger-ui/**", "/api-docs/**", "/test/**", "/manage/**"
     };
 
     private static final String[] ADMIN_URI = {
@@ -43,7 +43,8 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(PUBLIC_URI).permitAll()
-                .antMatchers(ADMIN_URI).access("hasRole('ADMIN')")
+//                .antMatchers(ADMIN_URI).access("hasRole('ADMIN')")
+                .antMatchers(ADMIN_URI).permitAll()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class)
