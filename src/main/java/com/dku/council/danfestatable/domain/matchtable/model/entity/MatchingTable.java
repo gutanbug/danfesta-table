@@ -41,16 +41,26 @@ public class MatchingTable extends BaseEntity {
     private LocalDateTime endTime;
 
     @Builder
-    private MatchingTable(int tableNumber, LocalDateTime startTime, LocalDateTime endTime) {
+    private MatchingTable(int tableNumber) {
         this.tableNumber = tableNumber;
         this.totalHeart = 2;
         this.tableStatus = TableStatus.ACTIVE;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        this.startTime = LocalDateTime.now();
+        this.endTime = LocalDateTime.now().plusHours(2);
     }
 
     public void addUser(User user) {
-        users.add(user);
-        user.setMatchingTable(this);
+        if(!users.contains(user)){
+            users.add(user);
+            user.setMatchingTable(this);
+        }
+    }
+
+    public void addTime() {
+        this.endTime = this.endTime.plusHours(1);
+    }
+
+    public void markedAsInactive() {
+        this.tableStatus = TableStatus.INACTIVE;
     }
 }
