@@ -6,5 +6,4 @@ import lombok.Getter;
 public enum TableStatus {
     ACTIVE,
     INACTIVE,
-    FORCE_INACTIVE;
 }

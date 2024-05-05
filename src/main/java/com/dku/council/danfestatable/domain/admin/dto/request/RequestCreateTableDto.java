@@ -1,0 +1,12 @@
+package com.dku.council.danfestatable.domain.admin.dto.request;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public class RequestCreateTableDto {
+    @Schema(description = "테이블 번호", example = "1")
+    private final String tableNumber;
+}
