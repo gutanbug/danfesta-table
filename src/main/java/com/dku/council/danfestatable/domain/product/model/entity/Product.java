@@ -34,4 +34,11 @@ public class Product extends BaseEntity {
         this.quantity = quantity;
         this.requiredHeart = requiredHeart;
     }
+
+    public void update(String name, String description, String quantity, String requiredHeart) {
+        this.name = name;
+        this.description = description;
+        this.quantity = Integer.parseInt(quantity);
+        this.requiredHeart = Integer.parseInt(requiredHeart);
+    }
 }
