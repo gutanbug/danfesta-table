@@ -1,6 +1,6 @@
 package com.dku.council.danfestatable.domain.admin.dto.list;
 
-import com.dku.council.danfestatable.domain.admin.dto.response.ResponseUserAdminDto;
+import com.dku.council.danfestatable.domain.admin.dto.response.ResponseUserInfoForAdminDto;
 import com.dku.council.danfestatable.domain.matchtable.model.entity.MatchingTable;
 import com.dku.council.danfestatable.domain.user.model.entity.User;
 import lombok.Getter;
@@ -17,7 +17,7 @@ public class SummarizedTableAdminDto {
     private final String startTime;
     private final String endTime;
     private final String userCount;
-    private final String users;
+    private final List<ResponseUserInfoForAdminDto> users;
 
     public SummarizedTableAdminDto(MatchingTable table) {
         this.id = table.getId();
@@ -26,7 +26,7 @@ public class SummarizedTableAdminDto {
         this.startTime = cleanTime(table.getStartTime());
         this.endTime = cleanTime(table.getEndTime());
         this.userCount = separate(table.getUsers());
-        this.users = makeInfo(ResponseUserAdminDto.of(table.getUsers()));
+        this.users = ResponseUserInfoForAdminDto.of(table.getUsers());
     }
 
     private String separate(List<User> users) {
@@ -44,13 +44,5 @@ public class SummarizedTableAdminDto {
     private String cleanTime(LocalDateTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm:ss");
         return time.format(formatter);
-    }
-
-    private String makeInfo(List<ResponseUserAdminDto> users) {
-        StringBuilder sb = new StringBuilder();
-        for(ResponseUserAdminDto user : users) {
-            sb.append(user.getName()).append(" / ").append(user.getGender()).append(" / ").append(user.getPhone()).append("<br>");
-        }
-        return sb.toString();
     }
 }

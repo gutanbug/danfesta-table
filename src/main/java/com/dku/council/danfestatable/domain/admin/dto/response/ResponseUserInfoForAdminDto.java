@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-public class ResponseUserAdminDto {
+public class ResponseUserInfoForAdminDto {
     private final String name;
     private final String gender;
     private final String phone;
 
-    public ResponseUserAdminDto(User user) {
+    public ResponseUserInfoForAdminDto(User user) {
         this.name = blindName(user.getName());
         this.gender = user.getGender();
         this.phone = user.getPhone();
@@ -29,9 +29,9 @@ public class ResponseUserAdminDto {
         return null;
     }
 
-    public static List<ResponseUserAdminDto> of(List<User> users) {
+    public static List<ResponseUserInfoForAdminDto> of(List<User> users) {
         return users.stream()
-                .map(ResponseUserAdminDto::new)
+                .map(ResponseUserInfoForAdminDto::new)
                 .collect(Collectors.toList());
     }
 }
