@@ -19,4 +19,7 @@ public interface MatchingTableRepository extends JpaRepository<MatchingTable, Lo
     @Query("select mt from MatchingTable mt join fetch mt.users u " +
             "where u.id = :userId and mt.tableStatus = 'ACTIVE'")
     Optional<MatchingTable> findByUserId(@Param("userId") Long userId);
+
+    @Query("select mt from MatchingTable mt where mt.id = :tableId and mt.tableStatus = 'ACTIVE'")
+    Optional<MatchingTable> findByIdWithActive(@Param("tableId") Long tableId);
 }

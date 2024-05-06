@@ -34,4 +34,6 @@ public class MatchingTableService {
         List<User> users = userRepository.findAllUsersByTableId(table.getId());
         return new ResponseMyTableDto(table, users.stream().map(User::getName).collect(Collectors.toList()));
     }
+
+    // TODO : 하트 결제 로직
 }

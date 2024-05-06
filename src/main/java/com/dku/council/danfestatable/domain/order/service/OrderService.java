@@ -68,6 +68,7 @@ public class OrderService {
                 .orderSumHeart(totalRequiredHeart)
                 .build();
         productOrdersRepository.save(po);
+        product.decreaseQuantity(dto.getAmount());
 
         return orders.getId();
     }
@@ -78,10 +79,13 @@ public class OrderService {
                 .orElseThrow(MatchingTableNotFoundException::new);
         Orders order = orderRepository.findById(orderId)
                 .orElseThrow(OrderNotFoundException::new);
+        Product product = productRepository.findByOrderId(orderId)
+                .orElseThrow(ProductNotFoundException::new);
         if(order.getMatchingTable().getId() != table.getId()) {
             throw new NotGrantedException();
         } else {
             order.markedAsCanceled();
+            product.increaseQuantity(order.getOrderCount());
         }
     }
 }
