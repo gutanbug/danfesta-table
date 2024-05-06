@@ -27,16 +27,17 @@ public class Orders extends BaseEntity {
 
     private int orderCount;
 
-    private int orderTotalHeart;
-
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
     @Builder
-    private Orders(MatchingTable matchingTable, int orderCount, int orderTotalHeart) {
+    private Orders(MatchingTable matchingTable, int orderCount) {
         this.matchingTable = matchingTable;
         this.orderCount = orderCount;
-        this.orderTotalHeart = orderTotalHeart;
         this.orderStatus = OrderStatus.PROGRESS;
+    }
+
+    public void markedAsCanceled() {
+        this.orderStatus = OrderStatus.CANCELED;
     }
 }
