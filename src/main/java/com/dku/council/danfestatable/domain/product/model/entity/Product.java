@@ -41,4 +41,12 @@ public class Product extends BaseEntity {
         this.quantity = Integer.parseInt(quantity);
         this.requiredHeart = Integer.parseInt(requiredHeart);
     }
+
+    public void decreaseQuantity(int amount) {
+        this.quantity -= amount;
+    }
+
+    public void increaseQuantity(int orderCount) {
+        this.quantity += orderCount;
+    }
 }
