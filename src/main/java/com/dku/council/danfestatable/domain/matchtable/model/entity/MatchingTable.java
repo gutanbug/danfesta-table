@@ -63,4 +63,15 @@ public class MatchingTable extends BaseEntity {
     public void markedAsInactive() {
         this.tableStatus = TableStatus.INACTIVE;
     }
+
+    public void useHeart(int orderSumHeart) {
+        this.totalHeart -= orderSumHeart;
+    }
+
+    public void increaseHeart(int requestHeart, boolean isPlus) {
+        if(isPlus)
+            this.totalHeart += requestHeart;
+        else
+            this.totalHeart -= requestHeart;
+    }
 }
