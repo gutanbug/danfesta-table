@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum OrderStatus {
     PROGRESS("진행중"),
     APPROVAL("승인"),
-    REJECT("거절");
+    REJECT("거절"),
+    CANCELED("취소");
 
     private final String status;
 
