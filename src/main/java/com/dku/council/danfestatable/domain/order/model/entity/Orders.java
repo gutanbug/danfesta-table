@@ -40,4 +40,12 @@ public class Orders extends BaseEntity {
     public void markedAsCanceled() {
         this.orderStatus = OrderStatus.CANCELED;
     }
+
+    public void changeToApproval() {
+        this.orderStatus = OrderStatus.APPROVAL;
+    }
+
+    public void changeToReject() {
+        this.orderStatus = OrderStatus.REJECT;
+    }
 }
