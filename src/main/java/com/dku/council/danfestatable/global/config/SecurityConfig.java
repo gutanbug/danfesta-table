@@ -26,11 +26,11 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     private static final String[] PUBLIC_URI = {
-            "/swagger-ui/**", "/api-docs/**", "/test/**", "/manage/**"
+            "/swagger-ui/**", "/api-docs/**", "/test/**"
     };
 
     private static final String[] ADMIN_URI = {
-            "/admin/**", "/test/auth"
+            "/test/auth"
     };
 
     @Bean
