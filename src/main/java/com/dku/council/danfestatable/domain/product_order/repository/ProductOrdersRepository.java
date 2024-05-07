@@ -1,6 +1,7 @@
 package com.dku.council.danfestatable.domain.product_order.repository;
 
 import com.dku.council.danfestatable.domain.product_order.model.entity.ProductOrders;
+import io.lettuce.core.ScanIterator;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,10 @@ public interface ProductOrdersRepository extends JpaRepository<ProductOrders, Lo
 
     @Query("select po from ProductOrders po join fetch po.orders o where o.id = :orderId")
     Optional<ProductOrders> findByOrderId(@Param("orderId") Long orderId);
+
+    @Query("select po from ProductOrders po join fetch po.orders o join fetch po.product p where o.orderStatus = 'PROGRESS'")
+    List<ProductOrders> findAllWithProgress();
+
+    @Query("select po from ProductOrders po join fetch po.orders o join fetch po.product p where o.orderStatus = 'APPROVAL' or o.orderStatus = 'REJECT'")
+    List<ProductOrders> findAllWithApprovalOrReject();
 }

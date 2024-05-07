@@ -19,12 +19,21 @@ public class OrderAdminController {
     private final OrderAdminService service;
 
     /**
-     * 전체 상품 주문 조회 (관리자용)
+     * 대기중인 상품 주문 전체 조회 (관리자용)
      */
     @GetMapping
     @AdminAuth
     public List<SummarizedOrderForAdminDto> listOrder(AppAuthentication auth) {
         return service.list();
+    }
+
+    /**
+     * 승인 / 거절된 상품 주문 전체 조회
+     */
+    @GetMapping("/history")
+    @AdminAuth
+    public List<SummarizedOrderForAdminDto> listOrderHistory(AppAuthentication auth) {
+        return service.listHistory();
     }
 
     /**

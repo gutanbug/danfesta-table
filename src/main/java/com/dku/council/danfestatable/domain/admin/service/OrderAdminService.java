@@ -31,7 +31,7 @@ public class OrderAdminService {
     private final MatchingTableRepository tableRepository;
 
     public List<SummarizedOrderForAdminDto> list() {
-        return productOrdersRepository.findAll().stream()
+        return productOrdersRepository.findAllWithProgress().stream()
                 .map(SummarizedOrderForAdminDto::new)
                 .collect(Collectors.toList());
     }
@@ -59,5 +59,11 @@ public class OrderAdminService {
         Orders orders = po.getOrders();
         product.increaseQuantity(orders.getOrderCount());
         orders.changeToReject();
+    }
+
+    public List<SummarizedOrderForAdminDto> listHistory() {
+        return productOrdersRepository.findAllWithApprovalOrReject().stream()
+                .map(SummarizedOrderForAdminDto::new)
+                .collect(Collectors.toList());
     }
 }

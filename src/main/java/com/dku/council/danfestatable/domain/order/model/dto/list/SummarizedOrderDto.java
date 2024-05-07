@@ -18,7 +18,7 @@ public class SummarizedOrderDto {
         this.productName = product.getName();
         this.orderCount = orders.getOrderCount();
         this.orderTotalHeart = orders.getOrderCount() * product.getRequiredHeart();
-        this.orderStatus = orders.getOrderStatus().name();
+        this.orderStatus = orders.getOrderStatus().getStatus();
         this.orderDate = orders.getCreatedAt().format(DateTimeFormatter.ofPattern("MM/dd HH:mm:ss"));
     }
 }
