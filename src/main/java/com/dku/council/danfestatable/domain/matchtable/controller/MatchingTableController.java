@@ -5,9 +5,11 @@ import com.dku.council.danfestatable.domain.matchtable.model.dto.response.Summar
 import com.dku.council.danfestatable.domain.matchtable.service.MatchingTableService;
 import com.dku.council.danfestatable.global.auth.jwt.AppAuthentication;
 import com.dku.council.danfestatable.global.auth.role.UserAuth;
+import com.dku.council.danfestatable.global.model.dto.ResponseIdDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,17 @@ import java.util.List;
 public class MatchingTableController {
 
     private final MatchingTableService matchingTableService;
+
+    /**
+     * 테이블 참가
+     * @param auth     사용자 인증 정보
+     * @param number   테이블 번호
+     */
+    @UserAuth
+    @PostMapping("/{number}")
+    public void joinTable(AppAuthentication auth, int number) {
+        matchingTableService.joinTable(auth.getUserId(), number);
+    }
 
     /**
      * 전체 테이블 목록 조회
