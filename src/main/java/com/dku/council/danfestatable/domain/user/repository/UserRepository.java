@@ -15,4 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from MatchingTable mt join mt.users u " +
             "where mt.id = :id and mt.tableStatus = 'ACTIVE'")
     List<User> findAllUsersByTableId(@Param("id") Long id);
+
+    @Query("select u from User u where u.loginId = :email")
+    Optional<User> findUserByLoginId(@Param("email") String email);
 }
