@@ -35,8 +35,6 @@ public class TestController {
     public ResponseLoginDto login(String loginId) {
         User user = userRepository.findByLoginId(loginId).orElseThrow(UserNotFoundException::new);
         AuthenticationToken token = jwtProvider.issue(user);
-        MatchingTable matchingTable = matchingTableRepo.findByUserId(user.getId()).orElseThrow(MatchingTableNotFoundException::new);
-        matchingTable.addUser(user);
         return new ResponseLoginDto(token);
     }
 }
