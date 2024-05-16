@@ -4,6 +4,7 @@ import com.dku.council.danfestatable.infra.nhn.global.exception.CannotSendSMSExc
 import com.dku.council.danfestatable.infra.nhn.global.exception.UnexpectedResponseException;
 import com.dku.council.danfestatable.infra.nhn.sms.model.dto.response.ResponseNHNCloudSMS;
 import com.dku.council.danfestatable.infra.nhn.sms.model.dto.request.RequestNHNCloudSMS;
+import com.dku.council.danfestatable.infra.nhn.sms.model.dto.response.ResponseNHNCloudSMS.Body.Data.SendResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,6 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Optional;
 
-import static com.dku.council.danfestatable.infra.nhn.sms.model.dto.response.ResponseNHNCloudSMS.Body.Data.*;
 
 @Service
 @RequiredArgsConstructor

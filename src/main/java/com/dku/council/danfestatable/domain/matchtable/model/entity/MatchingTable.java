@@ -74,4 +74,12 @@ public class MatchingTable extends BaseEntity {
         else
             this.totalHeart -= requestHeart;
     }
+
+    public void sendHeart(int heartCount) {
+        this.totalHeart -= heartCount;
+    }
+
+    public void receiveHeart(int heartCount) {
+        this.totalHeart += heartCount;
+    }
 }
