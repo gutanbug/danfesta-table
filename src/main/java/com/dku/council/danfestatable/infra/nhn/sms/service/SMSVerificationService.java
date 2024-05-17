@@ -61,6 +61,8 @@ public class SMSVerificationService {
 
     public void verifySMSCode(String phone, String code) {
         Instant now = Instant.now(clock);
+        phone = phone.trim().replaceAll("-", "");
+
         SMSAuth authObj = smsAuthRepository.getAuthPayload(phone, SMS_AUTH_NAME, SMSAuth.class, now)
                 .orElseThrow(NotSMSSentException::new);
 
