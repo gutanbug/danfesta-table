@@ -1,13 +1,12 @@
 package com.dku.council.danfestatable.domain.user.controller;
 
-import com.dku.council.danfestatable.domain.user.model.dto.request.RequestLoginDto;
-import com.dku.council.danfestatable.domain.user.model.dto.request.RequestSignupDto;
-import com.dku.council.danfestatable.domain.user.model.dto.request.RequestVerifySMSCodeDto;
-import com.dku.council.danfestatable.domain.user.model.dto.request.RequestWithPhoneDto;
+import com.dku.council.danfestatable.domain.user.model.dto.request.*;
 import com.dku.council.danfestatable.domain.user.model.dto.response.ResponseLoginDto;
 import com.dku.council.danfestatable.domain.user.model.dto.response.ResponseOAuthUrl;
 import com.dku.council.danfestatable.domain.user.service.OAuthService;
 import com.dku.council.danfestatable.domain.user.service.UserService;
+import com.dku.council.danfestatable.global.auth.jwt.AppAuthentication;
+import com.dku.council.danfestatable.global.auth.role.UserAuth;
 import com.dku.council.danfestatable.infra.nhn.sms.service.SMSVerificationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -75,5 +74,15 @@ public class UserController {
     @PostMapping("signup/sms/verify")
     public void verifySMSCode(@Valid @RequestBody RequestVerifySMSCodeDto dto) {
         smsVerificationService.verifySMSCode(dto.getPhoneNumber(), dto.getCode());
+    }
+
+    /**
+     * 직원 호출
+     * <p>관리자는 한 명만 있어야 api 호출이 가능합니다.</p>
+     */
+    @UserAuth
+    @PostMapping("/staff")
+    public void callStaff(AppAuthentication auth,  @RequestBody RequestCallStaffDto dto) {
+        userService.callStaff(auth.getUserId(), dto);
     }
 }
