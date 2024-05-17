@@ -32,6 +32,9 @@ public class User extends BaseEntity {
     private String phone;
 
     @NotNull
+    private String password;
+
+    @NotNull
     private String gender;
 
     @NotBlank
@@ -46,11 +49,12 @@ public class User extends BaseEntity {
     private MatchingTable matchingTable;
 
     @Builder
-    private User(String name, String phone, String gender, String loginId) {
+    private User(String name, String phone, String gender, String loginId, String password) {
         this.name = name;
         this.phone = phone;
         this.gender = gender;
         this.loginId = loginId;
+        this.password = password;
         this.userRole = UserRole.USER;
     }
 }
