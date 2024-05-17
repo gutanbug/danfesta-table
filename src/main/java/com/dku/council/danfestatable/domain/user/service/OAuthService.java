@@ -19,6 +19,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -28,7 +30,6 @@ public class OAuthService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
-    private final PasswordEncoder passwordEncoder;
 
     public String getKakaoLoginUrl() {
         String loginUri = env.getProperty("app.kakao.login-uri");
@@ -62,6 +63,7 @@ public class OAuthService {
                 .name(userResource.get("kakao_account").get("name").asText())
                 .gender(checkGender(userResource.get("kakao_account").get("gender").asText()))
                 .phone(changePhone(userResource.get("kakao_account").get("phone_number").asText()))
+                .password(UUID.randomUUID().toString())
                 .build();
         user = userRepository.save(user);
         return user;
