@@ -14,6 +14,7 @@ public class SummarizedTableDto {
     private final int tableNumber;
     private final String startTime;
     private final String endTime;
+    private final int totalHeart;
     private final String userCount;
 
     public SummarizedTableDto(MatchingTable table) {
@@ -21,6 +22,7 @@ public class SummarizedTableDto {
         this.tableNumber = table.getTableNumber();
         this.startTime = cleanTime(table.getStartTime());
         this.endTime = cleanTime(table.getEndTime());
+        this.totalHeart = table.getTotalHeart();
         this.userCount = makeUserCount(table.getUsers());
     }
 

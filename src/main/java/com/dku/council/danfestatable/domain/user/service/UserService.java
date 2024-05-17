@@ -83,7 +83,7 @@ public class UserService {
         }
 
         AuthenticationToken tokenResponse = jwtProvider.issue(user);
-        return new ResponseLoginDto(tokenResponse);
+        return new ResponseLoginDto(tokenResponse, user);
     }
 
     public void callStaff(Long userId, RequestCallStaffDto dto) {
