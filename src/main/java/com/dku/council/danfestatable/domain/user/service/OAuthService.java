@@ -55,7 +55,7 @@ public class OAuthService {
         }
 
         AuthenticationToken token = jwtProvider.issue(user);
-        return new ResponseLoginDto(token);
+        return new ResponseLoginDto(token, user);
     }
 
     private User makeUserFromResource(JsonNode userResource) {
