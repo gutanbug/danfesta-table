@@ -2,6 +2,7 @@ package com.dku.council.danfestatable.domain.user.service;
 
 import com.dku.council.danfestatable.domain.user.exception.AlreadyUserExistException;
 import com.dku.council.danfestatable.domain.user.exception.UserNotFoundException;
+import com.dku.council.danfestatable.domain.user.model.Enrolled;
 import com.dku.council.danfestatable.domain.user.model.dto.request.RequestLoginDto;
 import com.dku.council.danfestatable.domain.user.model.dto.request.RequestSignupDto;
 import com.dku.council.danfestatable.domain.user.model.dto.response.ResponseLoginDto;
@@ -28,22 +29,28 @@ public class UserService {
 
     @Transactional
     public void signUp(RequestSignupDto dto) {
+        String phone = eliminate(dto.getPhone());
         checkLoginId(dto);
-        checkPhone(dto);
+        checkPhone(phone);
 
         User user = User.builder()
                 .name(dto.getName())
-                .phone(dto.getPhone())
+                .phone(phone)
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .gender(dto.getGender())
                 .loginId(dto.getLoginId())
+                .enrolled(Enrolled.FORM)
                 .build();
         userRepository.save(user);
         smsVerificationService.deleteSMSAuth(dto.getPhone());
     }
 
-    private void checkPhone(RequestSignupDto dto) {
-        if (userRepository.findByPhone(dto.getPhone()).isPresent()) {
+    private String eliminate(String phone) {
+        return phone.replaceAll("-", "");
+    }
+
+    private void checkPhone(String phone) {
+        if (userRepository.findByPhone(phone).isPresent()) {
             throw new AlreadyUserExistException();
         }
     }
