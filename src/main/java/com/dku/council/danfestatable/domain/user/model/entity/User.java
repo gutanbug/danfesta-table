@@ -1,6 +1,7 @@
 package com.dku.council.danfestatable.domain.user.model.entity;
 
 import com.dku.council.danfestatable.domain.matchtable.model.entity.MatchingTable;
+import com.dku.council.danfestatable.domain.user.model.Enrolled;
 import com.dku.council.danfestatable.domain.user.model.UserRole;
 import com.dku.council.danfestatable.global.base.BaseEntity;
 import lombok.*;
@@ -41,6 +42,9 @@ public class User extends BaseEntity {
     private String loginId;
 
     @Enumerated(STRING)
+    private Enrolled enrolled;
+
+    @Enumerated(STRING)
     private UserRole userRole;
 
     @Setter
@@ -49,12 +53,13 @@ public class User extends BaseEntity {
     private MatchingTable matchingTable;
 
     @Builder
-    private User(String name, String phone, String gender, String loginId, String password) {
+    private User(String name, String phone, String gender, String loginId, String password, Enrolled enrolled) {
         this.name = name;
         this.phone = phone;
         this.gender = gender;
         this.loginId = loginId;
         this.password = password;
+        this.enrolled = enrolled;
         this.userRole = UserRole.USER;
     }
 }

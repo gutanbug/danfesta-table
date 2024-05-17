@@ -1,6 +1,7 @@
 package com.dku.council.danfestatable.domain.user.service;
 
 import com.dku.council.danfestatable.domain.user.exception.UserNotFoundException;
+import com.dku.council.danfestatable.domain.user.model.Enrolled;
 import com.dku.council.danfestatable.domain.user.model.dto.response.ResponseLoginDto;
 import com.dku.council.danfestatable.domain.user.model.entity.User;
 import com.dku.council.danfestatable.domain.user.repository.UserRepository;
@@ -64,6 +65,7 @@ public class OAuthService {
                 .gender(checkGender(userResource.get("kakao_account").get("gender").asText()))
                 .phone(changePhone(userResource.get("kakao_account").get("phone_number").asText()))
                 .password(UUID.randomUUID().toString())
+                .enrolled(Enrolled.KAKAO)
                 .build();
         user = userRepository.save(user);
         return user;
