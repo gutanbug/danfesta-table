@@ -5,6 +5,7 @@ import com.dku.council.danfestatable.domain.matchtable.model.entity.MatchingTabl
 import com.dku.council.danfestatable.domain.matchtable.repository.MatchingTableRepository;
 import com.dku.council.danfestatable.domain.message.exception.CannotSendHeartToMyself;
 import com.dku.council.danfestatable.domain.message.model.dto.request.RequestCreateMessageDto;
+import com.dku.council.danfestatable.domain.message.model.dto.response.ResponseMessageDto;
 import com.dku.council.danfestatable.domain.message.model.entity.Message;
 import com.dku.council.danfestatable.domain.message.repository.MessageRepository;
 import com.dku.council.danfestatable.domain.order.exception.NotEnoughHeartException;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -62,6 +64,12 @@ public class MessageService {
             String body = messageSource.getMessage("sms.send-message", new Object[]{receiverTable.getTableNumber()}, locale);
             smsService.sendSMS(user.getPhone(), body);
         }
+    }
 
+    public List<ResponseMessageDto> list(Long userId) {
+        MatchingTable table = tableRepository.findByUserId(userId)
+                .orElseThrow(MatchingTableNotFoundException::new);
+        List<Message> messages = repository.findByReceiverTableId(table.getId());
+        return messages.stream().map(ResponseMessageDto::new).collect(Collectors.toList());
     }
 }
