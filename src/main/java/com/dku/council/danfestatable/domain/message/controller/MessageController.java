@@ -1,6 +1,7 @@
 package com.dku.council.danfestatable.domain.message.controller;
 
 import com.dku.council.danfestatable.domain.message.model.dto.request.RequestCreateMessageDto;
+import com.dku.council.danfestatable.domain.message.model.dto.response.ResponseMessageDto;
 import com.dku.council.danfestatable.domain.message.service.MessageService;
 import com.dku.council.danfestatable.global.auth.jwt.AppAuthentication;
 import com.dku.council.danfestatable.global.auth.role.UserAuth;
@@ -8,6 +9,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -31,4 +34,12 @@ public class MessageController {
         messageService.sendMessageAndHeart(auth.getUserId(), tableId, dto);
     }
 
+    /**
+     * 자신의 테이블에 전송된 하트와 메시지 전체 조회
+     */
+    @UserAuth
+    @GetMapping("/my")
+    public List<ResponseMessageDto> list(AppAuthentication auth) {
+        return messageService.list(auth.getUserId());
+    }
 }
