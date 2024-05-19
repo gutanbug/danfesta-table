@@ -15,7 +15,6 @@ import com.dku.council.danfestatable.domain.user.repository.UserRepository;
 import com.dku.council.danfestatable.global.auth.jwt.AuthenticationToken;
 import com.dku.council.danfestatable.global.auth.jwt.JwtProvider;
 import com.dku.council.danfestatable.infra.nhn.sms.service.MMSService;
-import com.dku.council.danfestatable.infra.nhn.sms.service.SMSService;
 import com.dku.council.danfestatable.infra.nhn.sms.service.SMSVerificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +52,7 @@ public class UserService {
                 .phone(phone)
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .gender(dto.getGender())
-                .loginId(dto.getLoginId())
+                .loginId(UUID.randomUUID().toString())
                 .enrolled(Enrolled.FORM)
                 .build();
         userRepository.save(user);
@@ -70,13 +70,14 @@ public class UserService {
     }
 
     private void checkLoginId(RequestSignupDto dto) {
-        if (userRepository.findByLoginId(dto.getLoginId()).isPresent()) {
+        if (userRepository.findByPhone(dto.getPhone()).isPresent()) {
             throw new AlreadyUserExistException();
         }
     }
 
     public ResponseLoginDto login(RequestLoginDto dto) {
-        User user = userRepository.findByLoginId(dto.getLoginId()).orElseThrow(UserNotFoundException::new);
+        String phone = dto.getPhoneNumber().trim().replaceAll("-", "");
+        User user = userRepository.findByPhone(phone).orElseThrow(UserNotFoundException::new);
 
         if (!passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
             throw new UserNotFoundException();
