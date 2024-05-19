@@ -14,19 +14,15 @@ public class RequestSignupDto {
     @Schema(description = "전화번호", example = "010-1234-5678")
     private String phone;
 
-    @Schema(description = "로그인 아이디", example = "hong123")
-    private String loginId;
-
     @Schema(description = "비밀번호", example = "1234")
     private String password;
 
     @Schema(description = "성별", example = "남자")
     private String gender;
 
-    public RequestSignupDto(String name, String phone, String loginId, String password, String gender) {
+    public RequestSignupDto(String name, String phone, String password, String gender) {
         this.name = name;
         this.phone = phone;
-        this.loginId = loginId;
         this.password = password;
         this.gender = gender;
     }
