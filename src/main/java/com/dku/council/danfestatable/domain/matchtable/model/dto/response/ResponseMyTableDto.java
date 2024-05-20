@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 @Getter
 public class ResponseMyTableDto {
 
+    private final Long id;
+
     private final int tableNumber;
 
     private final int totalHeart;
@@ -23,6 +25,7 @@ public class ResponseMyTableDto {
     private final List<String> users;
 
     public ResponseMyTableDto(MatchingTable table, List<String> users) {
+        this.id = table.getId();
         this.tableNumber = table.getTableNumber();
         this.totalHeart = table.getTotalHeart();
         this.startTime = cleanTime(table.getStartTime());
