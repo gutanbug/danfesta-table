@@ -4,6 +4,7 @@ import com.dku.council.danfestatable.domain.matchtable.exception.MatchingTableNo
 import com.dku.council.danfestatable.domain.matchtable.model.entity.MatchingTable;
 import com.dku.council.danfestatable.domain.matchtable.repository.MatchingTableRepository;
 import com.dku.council.danfestatable.domain.user.exception.AlreadyUserExistException;
+import com.dku.council.danfestatable.domain.user.exception.MatchingTableNotEnteredException;
 import com.dku.council.danfestatable.domain.user.exception.UserNotFoundException;
 import com.dku.council.danfestatable.domain.user.model.Enrolled;
 import com.dku.council.danfestatable.domain.user.model.dto.request.RequestCallStaffDto;
@@ -88,7 +89,7 @@ public class UserService {
     }
 
     public void callStaff(Long userId, RequestCallStaffDto dto) {
-        MatchingTable table = tableRepository.findByUserId(userId).orElseThrow(MatchingTableNotFoundException::new);
+        MatchingTable table = tableRepository.findByUserId(userId).orElseThrow(MatchingTableNotEnteredException::new);
         User adminUser = userRepository.findAll().stream()
                 .filter(u -> u.getUserRole().isAdmin()).findFirst().orElseThrow(UserNotFoundException::new);
         smsService.sendMMS(MMSTitle, adminUser.getPhone(), messageSource.getMessage("mms.call-staff",
