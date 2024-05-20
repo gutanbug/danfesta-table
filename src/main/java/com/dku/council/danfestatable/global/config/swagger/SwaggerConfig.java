@@ -25,7 +25,7 @@ import java.util.Map;
                 description = "단페스타 테이블 매칭을 위한 RESTFUL API 제공"
         ),
         servers = {
-                @Server(url = "https://ese.danvery.com/api", description = "개발 서버"),
+                @Server(url = "http://133.186.219.172:8080", description = "개발 서버"),
                 @Server(url = "/", description = "로컬 서버")
         }
 )
