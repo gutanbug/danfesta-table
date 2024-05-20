@@ -49,6 +49,7 @@ public class MatchingTableService {
             user.setMatchingTable(table);
         } else {
             MatchingTable table = repository.findByTableNumber(number).orElseThrow(MatchingTableNotFoundException::new);
+            user.getMatchingTable().removeUser(user);
             table.addUser(user);
             user.setMatchingTable(table);
         }
