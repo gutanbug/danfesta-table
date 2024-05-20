@@ -56,6 +56,13 @@ public class MatchingTable extends BaseEntity {
         }
     }
 
+    public void removeUser(User user) {
+        if (users.contains(user)) {
+            users.remove(user);
+            user.setMatchingTable(null);
+        }
+    }
+
     public void addTime() {
         this.endTime = this.endTime.plusHours(1);
     }
