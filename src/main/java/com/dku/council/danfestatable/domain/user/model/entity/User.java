@@ -62,4 +62,8 @@ public class User extends BaseEntity {
         this.enrolled = enrolled;
         this.userRole = UserRole.USER;
     }
+
+    public void changeToAdmin() {
+        this.userRole = UserRole.ADMIN;
+    }
 }

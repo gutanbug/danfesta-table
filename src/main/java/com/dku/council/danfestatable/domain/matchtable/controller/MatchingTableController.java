@@ -21,7 +21,7 @@ public class MatchingTableController {
     private final MatchingTableService matchingTableService;
 
     /**
-     * 테이블 참가
+     * 테이블 참가 신청
      * @param auth     사용자 인증 정보
      * @param number   테이블 번호
      */
