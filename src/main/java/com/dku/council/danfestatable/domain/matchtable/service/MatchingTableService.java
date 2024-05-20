@@ -32,8 +32,7 @@ public class MatchingTableService {
 
     public ResponseMyTableDto getMyTable(Long userId) {
         MatchingTable table = repository.findByUserId(userId).orElseThrow(MatchingTableNotFoundException::new);
-        List<User> users = userRepository.findAllUsersByTableId(table.getId());
-        return new ResponseMyTableDto(table, users.stream().map(User::getName).collect(Collectors.toList()));
+        return new ResponseMyTableDto(table);
     }
 
     @Transactional
