@@ -9,6 +9,8 @@ import com.dku.council.danfestatable.domain.message.repository.MessageRepository
 import com.dku.council.danfestatable.domain.user.exception.UserNotFoundException;
 import com.dku.council.danfestatable.domain.user.model.entity.User;
 import com.dku.council.danfestatable.domain.user.repository.UserRepository;
+import com.dku.council.danfestatable.domain.waiting.model.entity.Waiting;
+import com.dku.council.danfestatable.domain.waiting.repository.WaitingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ public class MatchingTableService {
     private final MatchingTableRepository repository;
     private final UserRepository userRepository;
     private final MessageRepository messageRepository;
+    private final WaitingRepository waitingRepository;
 
     public List<SummarizedTableDto> list() {
         List<MatchingTable> lists = repository.findAllWithActive();
@@ -42,19 +45,11 @@ public class MatchingTableService {
     public void joinTable(Long userId, int number) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
-        if (repository.findByTableNumber(number).isEmpty()) {
-            MatchingTable table = MatchingTable.builder()
-                    .tableNumber(number)
-                    .build();
-            repository.save(table);
-            table.addUser(user);
-            user.setMatchingTable(table);
-        } else {
-            MatchingTable table = repository.findByTableNumber(number).orElseThrow(MatchingTableNotFoundException::new);
-            user.getMatchingTable().removeUser(user);
-            table.addUser(user);
-            user.setMatchingTable(table);
-        }
+        Waiting waiting = Waiting.builder()
+                .user(user)
+                .tableNumber(number)
+                .build();
+        waitingRepository.save(waiting);
     }
 
     // TODO : 하트 결제 로직
