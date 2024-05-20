@@ -7,7 +7,6 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 public class ResponseMyTableDto {
@@ -24,13 +23,16 @@ public class ResponseMyTableDto {
 
     private final String userCount;
 
-    public ResponseMyTableDto(MatchingTable table) {
+    private final int receiveMessageCount;
+
+    public ResponseMyTableDto(MatchingTable table, int receiveMessageCount) {
         this.id = table.getId();
         this.tableNumber = table.getTableNumber();
         this.totalHeart = table.getTotalHeart();
         this.startTime = cleanTime(table.getStartTime());
         this.endTime = cleanTime(table.getEndTime());
         this.userCount = makeUserCount(table.getUsers());
+        this.receiveMessageCount = receiveMessageCount;
     }
 
     private String cleanTime(LocalDateTime time) {

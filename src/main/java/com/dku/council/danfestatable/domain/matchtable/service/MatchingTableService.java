@@ -5,6 +5,7 @@ import com.dku.council.danfestatable.domain.matchtable.model.dto.response.Respon
 import com.dku.council.danfestatable.domain.matchtable.model.dto.response.SummarizedTableDto;
 import com.dku.council.danfestatable.domain.matchtable.model.entity.MatchingTable;
 import com.dku.council.danfestatable.domain.matchtable.repository.MatchingTableRepository;
+import com.dku.council.danfestatable.domain.message.repository.MessageRepository;
 import com.dku.council.danfestatable.domain.user.exception.UserNotFoundException;
 import com.dku.council.danfestatable.domain.user.model.entity.User;
 import com.dku.council.danfestatable.domain.user.repository.UserRepository;
@@ -24,6 +25,7 @@ public class MatchingTableService {
 
     private final MatchingTableRepository repository;
     private final UserRepository userRepository;
+    private final MessageRepository messageRepository;
 
     public List<SummarizedTableDto> list() {
         List<MatchingTable> lists = repository.findAllWithActive();
@@ -32,7 +34,8 @@ public class MatchingTableService {
 
     public ResponseMyTableDto getMyTable(Long userId) {
         MatchingTable table = repository.findByUserId(userId).orElseThrow(MatchingTableNotFoundException::new);
-        return new ResponseMyTableDto(table);
+        int receiveMessageCount = messageRepository.countReceiveSendMessage(table.getId());
+        return new ResponseMyTableDto(table, receiveMessageCount);
     }
 
     @Transactional

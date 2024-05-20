@@ -11,4 +11,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     @Query("select m from Message m where m.receiverTable.id = :receiverTableId order by m.createdAt desc")
     List<Message> findByReceiverTableId(@Param("receiverTableId") Long receiverTableId);
+
+    @Query("select count(*) from Message m where m.receiverTable.id = :tableId")
+    int countReceiveSendMessage(@Param("tableId") Long tableId);
 }
