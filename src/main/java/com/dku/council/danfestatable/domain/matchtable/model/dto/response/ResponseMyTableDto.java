@@ -22,19 +22,31 @@ public class ResponseMyTableDto {
 
     private final String endTime;
 
-    private final List<String> users;
+    private final String userCount;
 
-    public ResponseMyTableDto(MatchingTable table, List<String> users) {
+    public ResponseMyTableDto(MatchingTable table) {
         this.id = table.getId();
         this.tableNumber = table.getTableNumber();
         this.totalHeart = table.getTotalHeart();
         this.startTime = cleanTime(table.getStartTime());
         this.endTime = cleanTime(table.getEndTime());
-        this.users = users;
+        this.userCount = makeUserCount(table.getUsers());
     }
 
     private String cleanTime(LocalDateTime time) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm:ss");
         return time.format(formatter);
+    }
+
+    private String makeUserCount(List<User> users) {
+        int totalSize = users.size();
+        int count = 0;
+
+        for(User user : users) {
+            if(user.getGender().equals("남자")) {
+                count++;
+            }
+        }
+        return "남자:" + count + "명, 여자:" + (totalSize - count) + "명";
     }
 }
