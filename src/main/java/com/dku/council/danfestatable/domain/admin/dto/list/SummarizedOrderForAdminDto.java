@@ -3,6 +3,8 @@ package com.dku.council.danfestatable.domain.admin.dto.list;
 import com.dku.council.danfestatable.domain.product_order.model.entity.ProductOrders;
 import lombok.Getter;
 
+import java.time.format.DateTimeFormatter;
+
 @Getter
 public class SummarizedOrderForAdminDto {
 
@@ -12,6 +14,7 @@ public class SummarizedOrderForAdminDto {
     private final int orderCount;
     private final int orderSumHeart;
     private final String orderStatus;
+    private final String orderDate;
 
     public SummarizedOrderForAdminDto(ProductOrders po) {
         this.orderId = po.getOrders().getId();
@@ -20,5 +23,6 @@ public class SummarizedOrderForAdminDto {
         this.orderCount = po.getOrders().getOrderCount();
         this.orderSumHeart = po.getOrderSumHeart();
         this.orderStatus = po.getOrders().getOrderStatus().getStatus();
+        this.orderDate = po.getOrders().getCreatedAt().format(DateTimeFormatter.ofPattern("MM/dd HH:mm:ss"));
     }
 }
