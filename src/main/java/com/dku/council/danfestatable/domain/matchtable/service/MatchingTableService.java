@@ -1,5 +1,6 @@
 package com.dku.council.danfestatable.domain.matchtable.service;
 
+import com.dku.council.danfestatable.domain.matchtable.exception.AlreadyWaitingException;
 import com.dku.council.danfestatable.domain.matchtable.exception.MatchingTableNotFoundException;
 import com.dku.council.danfestatable.domain.matchtable.model.dto.response.ResponseMyTableDto;
 import com.dku.council.danfestatable.domain.matchtable.model.dto.response.SummarizedTableDto;
@@ -44,6 +45,10 @@ public class MatchingTableService {
     @Transactional
     public void joinTable(Long userId, int number) {
         User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+
+        if(waitingRepository.findByUserIdWithWaiting(user.getId()).isPresent()) {
+            throw new AlreadyWaitingException();
+        }
 
         Waiting waiting = Waiting.builder()
                 .user(user)
