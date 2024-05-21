@@ -47,7 +47,9 @@ public class WaitingService {
             waiting.changeToApproval();
         } else {
             MatchingTable table = tableRepository.findByTableNumber(waiting.getTableNumber()).orElseThrow(MatchingTableNotFoundException::new);
-            waiting.getUser().getMatchingTable().removeUser(waiting.getUser());
+            if(waiting.getUser().getMatchingTable() != null) {
+                waiting.getUser().getMatchingTable().removeUser(waiting.getUser());
+            }
             table.addUser(waiting.getUser());
             waiting.getUser().setMatchingTable(table);
             waiting.changeToApproval();
