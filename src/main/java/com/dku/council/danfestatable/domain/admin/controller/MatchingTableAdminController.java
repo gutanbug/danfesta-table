@@ -66,7 +66,7 @@ public class MatchingTableAdminController {
      */
     @PatchMapping("/{tableId}/increase-heart")
     @AdminAuth
-    public void increaseHeart(AppAuthentication auth, @PathVariable Long tableId, @RequestBody RequestIncreaseHeartDto dto) {
-        service.increaseHeart(tableId, dto.getRequestHeart(), dto.isPlus());
+    public void increaseHeart(AppAuthentication auth, @PathVariable Long tableId, @RequestParam boolean isPlus,@RequestBody RequestIncreaseHeartDto dto) {
+        service.increaseHeart(tableId, dto.getRequestHeart(), isPlus);
     }
 }
