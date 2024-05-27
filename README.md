@@ -76,3 +76,7 @@
 
 # ER 다이어그램
 <img width="1119" alt="image" src="https://github.com/gutanbug/danfesta-table/assets/112674303/ca3a438e-3b63-410a-9bda-9f8cc8781ec8">
+
+# Figma 디자인
+<img width="864" alt="image" src="https://github.com/gutanbug/danfesta-table/assets/112674303/0474303e-fee6-4216-832c-c835abd02f49">
+
